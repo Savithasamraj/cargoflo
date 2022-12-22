@@ -11,6 +11,7 @@ import {
   SafeAreaView,
 } from "react-native";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { Formik } from "formik";
 import axios from "axios";
 import * as Yup from "yup";
@@ -19,13 +20,13 @@ const SignupSchema = Yup.object().shape({
   username: Yup.string()
     .min(2)
     .max(20, "Too Long!")
-    .required("*please enter your name"),
+    .required("please enter your name"),
 
     password: Yup
     .string()
     .min(8, ({ min }) => `Password must be at least ${min} characters`)
     .required('Password is required'),
-    number:Yup.string().matches("^[A-Z]{2}[0-9]{2}[A-HJ-NP-Z]{1,2}[0-9]{4}$","Letter in uppercase").required("Enter in uppercase")
+    number:Yup.string().required("Enter in uppercase")
 });
 function Register(props) {
 
@@ -61,15 +62,14 @@ function Register(props) {
           values,
           errors,
           touched,
-          setFieldTouched,
-          isValid,
+         
         }) => {
           return (
-            <View style={styles.box}>
+            <SafeAreaView style={styles.box}>
               <Text style={styles.title}>Register</Text>
-              <Text style={styles.person}>Username</Text>
+              {/* <Text style={styles.person}>Username</Text> */}
               <View style={styles.inputView}>
-                <MaterialIcons name="person"></MaterialIcons>
+                <MaterialIcons name="person" style={styles.icon}></MaterialIcons>
                 <TextInput
                   style={styles.TextInput}
                   placeholder=" Enter your UserName"
@@ -83,14 +83,14 @@ function Register(props) {
               ) : (
                 <Text>{null}</Text>
               )}
-              <Text style={styles.person}>Password</Text>
+              {/* <Text style={styles.person}>Password</Text> */}
               <View style={styles.inputView}>
-                <MaterialIcons name="vpn-key"></MaterialIcons>
+                <MaterialIcons name="vpn-key" style={styles.icon}></MaterialIcons>
                 <TextInput
                   style={styles.TextInput}
                   placeholder="Enter your Password"
                   placeholderTextColor="#003f5c"
-                  //   secureTextEntry={true}
+                    secureTextEntry={true}
                   value={values.password}
                   onChangeText={handleChange("password")}
                 />
@@ -100,14 +100,14 @@ function Register(props) {
               ) : (
                 <Text>{null}</Text>
               )}
-              <Text style={styles.person}>Vehicle number</Text>
+              {/* <Text style={styles.person}>Vehicle number</Text> */}
               <View style={styles.inputView}>
-                <MaterialIcons name="vpn-key"></MaterialIcons>
+              <MaterialCommunityIcons style={styles.Headericon} name="truck" color={"black"} size={20} />
                 <TextInput
                   style={styles.TextInput}
                   placeholder="Enter your vehiclenumber"
                   placeholderTextColor="#003f5c"
-                
+                  autoCapitalize="characters"
                   value={values.number}
                   onChangeText={handleChange("number")}
                 />
@@ -118,27 +118,18 @@ function Register(props) {
                 <Text>{null}</Text>
               )}
               <Button onPress={handleSubmit} title="Submit" />
-              {/* <TouchableOpacity
-                style={styles.loginBtn}
-                onPress={() => handleSubmit}
-              >
-                <Text
-                  title="SIGNUP"
-                   onPress={()=>handleSubmit}
-                >
-                  SIGNUP
-                </Text>
-              </TouchableOpacity> */}
-
+             <View style={styles.login}>
+              <Text>Already have Account?</Text>
               <TouchableOpacity
-                style={styles.register}
-                onPress={() => props.navigation.navigate("Login")}
+                style={styles.registers}
+                onPress={() => props.navigation.replace("Login")}
               >
                 <Text title="register" style={styles.register}>
-                  click here to Login
+                   Login
                 </Text>
               </TouchableOpacity>
-            </View>
+              </View>
+            </SafeAreaView >
           );
         }}
       </Formik>
@@ -158,8 +149,8 @@ const styles = StyleSheet.create({
   },
   title: {
     fontWeight: "bold",
-    marginBottom: 20,
-    fontSize: 30,
+    marginBottom: 10,
+    fontSize: 20,
     textAlign: "center",
   },
   box: {
@@ -175,15 +166,25 @@ const styles = StyleSheet.create({
     borderWidth: 5,
   },
   register: {
-    color: "red",
+    
     textAlign: "center",
+    height:25,
+    width:60,
+    textAlign: "center",
+    backgroundColor:"orange"
+  
+  },
+  registers:{
+alignItems:"center",
+paddingLeft:10
+
   },
 
   inputView: {
     backgroundColor: "whitesmoke",
     borderRadius: 10,
     width: 250,
-    height: 45,
+    height: 40,
     marginBottom: 10,
     textAlign: "center",
     alignItems: "center",
@@ -195,8 +196,9 @@ const styles = StyleSheet.create({
   TextInput: {
     textAlign: "justify",
     width: 200,
-    height: 40,
+    height: 30,
     backgroundColor: "whitesmoke",
+    fontSize:16
   },
 
   forgot_button: {
@@ -212,7 +214,7 @@ const styles = StyleSheet.create({
     height: 40,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 5,
+   
     backgroundColor: "coral",
     marginLeft: 80,
   },
@@ -223,6 +225,15 @@ const styles = StyleSheet.create({
   errorTxt: {
     color: "red",
   },
+  icon:{
+    fontSize:16
+  },
+  login:{
+    display:"flex",
+    flexDirection:"row",
+    paddingTop:10,
+    textAlign:"center"
+  }
 });
 
 export default Register;

@@ -10,11 +10,7 @@ const Headertitle = () => {
         
         <View style={styles.Headertitle}>
           <MaterialCommunityIcons style={styles.Headericon} name="airplane" color={"black"} size={40} />
-          {/* <MaterialIcons
-        name="airplane"
-        size={30}
-        style={{ padding: 10 }}
-      ></MaterialIcons> */}
+          
 
           <Text style={styles.Headertext}>PreFlight</Text>
         </View>

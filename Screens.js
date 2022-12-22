@@ -9,15 +9,15 @@ import {
 import React, { useState, useEffect, useRef } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Camera } from "expo-camera";
-
-const Screens = () => {
+import { Formik } from "formik";
+const Screens = (props) => {
   const [cameraPermission, setCameraPermission] = useState(null);
   const [camera, setcamera] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
   const [number, setnumber] = useState("");
   const [checknumber, setchecknumber] = useState(false);
   const permisionFunction = async () => {
-    // here is how you can get the camera permission
+   
     const cameraPermission = await Camera.requestCameraPermissionsAsync();
 
     setCameraPermission(cameraPermission.status === "granted");
@@ -37,10 +37,12 @@ const Screens = () => {
   };
   const validate = (num) => {
     const numeric = num.replace(/[^0-9]/g, "");
+    
     setnumber(numeric);
 
     console.log(number);
   };
+ 
 
   return (
     <SafeAreaView style={styles.header}>
@@ -56,7 +58,28 @@ const Screens = () => {
 
         <Button title={"Take Picture"} onPress={takePicture} />
       </View>
-      <View>
+      <Formik initialValues={{ number: "" }}
+      onSubmit=
+
+      {
+        async(values)=>{
+          console.log(values)
+        props.navigation.replace("Drawer")
+        }
+      }
+    
+      
+      >
+         {({
+          handleChange,
+          handleSubmit,
+          values,
+          errors,
+          touched,
+         
+        }) => {
+          return (
+      <View style={styles.odometer}>
         <Text style={styles.text}>Enter Odometer distance</Text>
         <TextInput
           style={styles.TextInput}
@@ -65,13 +88,18 @@ const Screens = () => {
           onChange={(num) => validate(num.nativeEvent.text)}
           keyboardType="number-pad"
           value={number}
+          maxLength={7}
+          onChangeText={handleChange("number")}
         ></TextInput>
-      </View>
-      <View>
-        <TouchableOpacity>
-          <Text style={styles.button}>Submit</Text>
+        <View>
+        <TouchableOpacity> 
+          <Text style={styles.button} onPress={handleSubmit}>Submit</Text>
         </TouchableOpacity>
       </View>
+      </View>
+      )}}
+      </Formik>
+  
     </SafeAreaView>
   );
 };
@@ -99,19 +127,24 @@ const styles = StyleSheet.create({
     height: 40,
     backgroundColor: "whitesmoke",
     borderWidth: 2,
-    borderColor: "blue",
+  
     fontSize: 15,
   },
   button: {
     margin: 15,
-    padding: 15,
-    width: 150,
-    height: 50,
+   
+    width: 100,
+    height: 40,
     textAlign: "center",
-    backgroundColor: "turquoise",
-    color: "black",
-    fontSize: 18,
+    backgroundColor: "lightskyblue",
+    paddingTop:8,
+    fontSize: 16,
     borderRadius: 9,
   },
+  odometer:{
+    flex:0.5,
+    alignItems:"center",
+    backgroundColor:"whitesmoke"
+  }
 });
 export default Screens;

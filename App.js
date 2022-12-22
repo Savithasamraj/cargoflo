@@ -22,73 +22,77 @@ const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
 const Stacks = createNativeStackNavigator();
- const Profiles=createNativeStackNavigator();
- const Settings1=createNativeStackNavigator();
- const Contactsstack=createNativeStackNavigator();
- const ProfileDrawer=createDrawerNavigator();
- function ProfilesDrawer(){
-  return(
-    <ProfileDrawer.Navigator screenOptions={{
-      headerTitle: () => <Headertitle />,
-      headerStyle: {
-        backgroundColor: "deepskyblue",
-        height: 70,
-      },
-      headerTintColor: "black",
-      headerTitleStyle: {
-        fontsize: 18,
-        fontStyle: "italic",
-        letterSpacing: 1.5,
-      },
+const Profiles = createNativeStackNavigator();
+const Settings1 = createNativeStackNavigator();
+const Contactsstack = createNativeStackNavigator();
+const ProfileDrawer = createDrawerNavigator();
+function ProfilesDrawer() {
+  return (
+    <ProfileDrawer.Navigator
+      screenOptions={{
+        headerTitle: () => <Headertitle />,
+        headerStyle: {
+          backgroundColor: "deepskyblue",
+          height: 70,
+        },
+        headerTintColor: "black",
+        headerTitleStyle: {
+          fontsize: 18,
+          fontStyle: "italic",
+          letterSpacing: 1.5,
+        },
 
-      headerRight: () => {
-        return (
-          <View style={styles.Popup}>
-            <Popup></Popup>
-          </View>
-        );
-      },
-    }}   initialRouteName={"Profile"}>
+        headerRight: () => {
+          return (
+            <View style={styles.Popup}>
+              <Popup></Popup>
+            </View>
+          );
+        },
+      }}
+      initialRouteName={"Profile"}
+    >
       <ProfileDrawer.Screen name="Profile" component={Profile} />
       <ProfileDrawer.Screen name="Home" component={Home} />
-      
-      
-      
+
       <ProfileDrawer.Screen name="Settings" component={Settings} />
       <ProfileDrawer.Screen name="Contact" component={Contacts} />
     </ProfileDrawer.Navigator>
-  )
-  }
- 
-function Profilestack(){
-  return(
-    <Profiles.Navigator  screenOptions={{ header: () => null }}>
+  );
+}
+
+function Profilestack() {
+  return (
+    <Profiles.Navigator screenOptions={{ header: () => null }}>
       <Profiles.Screen name="Drawers" component={Drawers}></Profiles.Screen>
 
       <Profiles.Screen name="Profiles" component={Profile}></Profiles.Screen>
-
-</Profiles.Navigator>
-  )
+    </Profiles.Navigator>
+  );
 }
-function Settingstack(){
-  return(
-    <Settings1.Navigator  screenOptions={{ header: () => null }}>
+function Settingstack() {
+  return (
+    <Settings1.Navigator screenOptions={{ header: () => null }}>
       <Settings1.Screen name="Drawers" component={Drawers}></Settings1.Screen>
 
       <Settings1.Screen name="Settings" component={Settings}></Settings1.Screen>
-
-</Settings1.Navigator>
-  )
+    </Settings1.Navigator>
+  );
 }
-function Contactstack(){
-  return(
-    <Contactsstack.Navigator  screenOptions={{ header: () => null }}>
-      <Contactsstack.Screen name="Drawers" component={Drawers}></Contactsstack.Screen>
+function Contactstack() {
+  return (
+    <Contactsstack.Navigator screenOptions={{ header: () => null }}>
+      <Contactsstack.Screen
+        name="Drawers"
+        component={Drawers}
+      ></Contactsstack.Screen>
 
-      <Contactsstack.Screen name="settings" component={Settings}></Contactsstack.Screen>
-
-</Contactsstack.Navigator>
-  )
+      <Contactsstack.Screen
+        name="settings"
+        component={Settings}
+      ></Contactsstack.Screen>
+    </Contactsstack.Navigator>
+  );
 }
 
 function Rootstack() {
@@ -96,14 +100,13 @@ function Rootstack() {
     <Stacks.Navigator screenOptions={{ header: () => null }}>
       <Stacks.Screen name="Tab" component={MyTabs}></Stacks.Screen>
       <Stacks.Screen name="Drawer" component={Drawers}></Stacks.Screen>
-      
-      
+
       <Stacks.Screen name="Home" component={Home}></Stacks.Screen>
     </Stacks.Navigator>
   );
 }
 
-function MyTabs({navigation}) {
+function MyTabs({ navigation }) {
   return (
     <Tab.Navigator
       screenOptions={{
@@ -121,6 +124,7 @@ function MyTabs({navigation}) {
 
         headerRight: () => {
           return (
+            
             <View style={styles.Popup}>
               <Popup></Popup>
             </View>
@@ -154,7 +158,7 @@ function MyTabs({navigation}) {
         options={{
           header: () => null,
           tabBarIcon: () => {
-            return  <MaterialIcons name="settings" size={30} ></MaterialIcons>;
+            return <MaterialIcons name="settings" size={30}></MaterialIcons>;
           },
         }}
       />
@@ -171,7 +175,6 @@ function MyTabs({navigation}) {
               ></MaterialIcons>
             );
           },
-          
         }}
       />
     </Tab.Navigator>
@@ -203,8 +206,6 @@ function Drawers() {
           );
         },
       }}
-      
-
     >
       <Drawer.Screen name="Home" component={Home} />
       <Drawer.Screen name="Profile" component={Profile} />
@@ -217,39 +218,66 @@ function Drawers() {
 export default function App() {
   return (
     <>
-    <SafeAreaView style={styles.SafeAreaView}>
-      <View style={styles.rootview}>
-        <NavigationContainer>
-          <Navigator>
-          <Screen name="Register" component={Register}  options={{ header: () => null }} />
-            <Screen
-              name="Login"
-              component={Login}
-              options={{ header: () => null }}
-            />
-            {/* <Screen name="Register" component={Register} /> */}
+      <SafeAreaView style={styles.SafeAreaView}>
+        <View style={styles.rootview}>
+          <NavigationContainer>
+            <Navigator>
+              <Screen
+                name="Register"
+                component={Register}
+                options={{
+                  title: "Cargoflo",
+                  headerStyle: {
+                    backgroundColor: "white",
+                  },
+                  headerTitleStyle: {
+                    fontWeight: "bold",
+                    fontSize: 25,
+                    color: "orange",
+                  },
+                }}
+              />
+              <Screen
+                name="Login"
+                component={Login}
+                options={{
+                  title: "Cargoflo",
+                  headerStyle: {
+                    backgroundColor: "white",
+                  },
+                  headerTitleStyle: {
+                    fontWeight: "bold",
+                    fontSize: 25,
+                    color: "orange",
+                  },
+                }}
+              />
 
-            <Screen
-              name="Drawer"
-              component={Rootstack}
-              options={{ header: () => null }}
-            />
-          
-            <Screen
-              name="Screens"
-              component={Screens}
-              options={{
-                header: () => null,
-                headerStyle: {
-                  title: "cargoflo",
-                },
-              }}
-            />
-           
-          </Navigator>
-        </NavigationContainer>
-      </View>
-    </SafeAreaView>
+              <Screen
+                name="Drawer"
+                component={Rootstack}
+                options={{ header: () => null }}
+              />
+
+              <Screen
+                name="Screens"
+                component={Screens}
+                options={{
+                  title: "Cargoflo",
+                  headerStyle: {
+                    backgroundColor: "white",
+                  },
+                  headerTitleStyle: {
+                    fontWeight: "bold",
+                    fontSize: 25,
+                    color: "orange",
+                  },
+                }}
+              />
+            </Navigator>
+          </NavigationContainer>
+        </View>
+      </SafeAreaView>
     </>
   );
 }

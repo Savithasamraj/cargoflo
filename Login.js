@@ -8,6 +8,7 @@ import {
   TextInput,
   Button,
   TouchableOpacity,
+  KeyboardAvoidingView,
 } from "react-native";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { Formik } from "formik";
@@ -30,6 +31,7 @@ const SignupSchema = Yup.object().shape({
 
 export default function Login(props) {
   return (
+    
     <View style={styles.container}>
       <Image style={styles.image} source={require("./assets/image1.gif")} />
 
@@ -37,10 +39,12 @@ export default function Login(props) {
         initialValues={{ username: "", password: "" }}
         
         onSubmit={
-          
+        
           async (values) => {
           console.log(values)
+          
           try {
+            props.navigation.replace("Screens")
             console.log(values);
             const data = await axios.post(
               "http://192.168.29.232:5000/login",
@@ -66,13 +70,13 @@ export default function Login(props) {
         }) => {
           return (
             
-            <View>
+          
              
               <View style={styles.box}>
                 <Text style={styles.title}>Login</Text>
-                <Text style={styles.person}>Username</Text>
+                {/* <Text style={styles.person}>Username</Text> */}
                 <View style={styles.inputView}>
-                  <MaterialIcons name="person"></MaterialIcons>
+                  <MaterialIcons name="person" style={styles.icon}></MaterialIcons>
                   <TextInput
                     style={styles.TextInput}
                     placeholder=" Enter your UserName"
@@ -87,17 +91,17 @@ export default function Login(props) {
                   <Text>{null}</Text>
                 )}
 
-                <Text style={styles.person}>Password</Text>
+                {/* <Text style={styles.person}>Password</Text> */}
 
                 <View style={styles.inputView}>
-                  <MaterialIcons name="vpn-key"></MaterialIcons>
+                  <MaterialIcons name="vpn-key" style={styles.icon}></MaterialIcons>
                   <TextInput
                     style={styles.TextInput}
                     placeholder="Enter your Password"
                     placeholderTextColor="#003f5c"
                     value={values.password}
                     onChangeText={handleChange("password")}
-                    
+                    secureTextEntry={true}
                   />
                 </View>
                 {errors.password && touched.password ? (
@@ -105,7 +109,7 @@ export default function Login(props) {
               ) : (
                 <Text>{null}</Text>
               )}
-              <Button onPress={handleSubmit} title="LOGIN" />
+              <Button  style={styles.loginBtn} onPress={handleSubmit} title="LOGIN" />
                 {/* <TouchableOpacity
                   style={styles.loginBtn}
                   onPress={() => handleSubmit}
@@ -113,23 +117,28 @@ export default function Login(props) {
                 >
                   <Text title="SIGNUP">LOGIN</Text>
                 </TouchableOpacity> */}
-
+ <View style={styles.login}>
+              <Text>Don't have Account?</Text>
+              <TouchableOpacity
+                style={styles.registers}
+                onPress={() => props.navigation.replace("Register")}
+              >
+                <Text title="register" style={styles.register}>
+                  REGISTER
+                </Text>
+              </TouchableOpacity>
+              </View>
                 
-                <TouchableOpacity
-                  style={styles.register}
-                  onPress={() => props.navigation.replace("Drawer")}
-                >
-                  <Text title="register" style={styles.register}>
-                    click here to REGISTER
-                  </Text>
-                </TouchableOpacity>
+               
               </View>
             
-            </View>
+           
+           
           );
         }}
       </Formik>
     </View>
+    
   );
 }
 
@@ -139,6 +148,8 @@ const styles = StyleSheet.create({
     backgroundColor: "midnightblue",
     alignItems: "center",
     justifyContent: "center",
+   
+    
   },
   person: {
     marginLeft: 2,
@@ -154,23 +165,26 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     borderWidth: 2,
     backgroundColor: "white",
+    height:350
   },
   image: {
     marginBottom: 20,
     width: 400,
-    height: 200,
+    height: 250,
     borderWidth: 5,
+   
   },
   register: {
     color: "red",
     textAlign: "center",
+    paddingTop:20
   },
 
   inputView: {
     backgroundColor: "whitesmoke",
     borderRadius: 10,
     width: 250,
-    height: 55,
+    height: 40,
     marginBottom: 10,
     textAlign: "center",
     alignItems: "center",
@@ -181,8 +195,9 @@ const styles = StyleSheet.create({
   TextInput: {
     textAlign: "justify",
     width: 200,
-    height: 40,
+    height: 30,
     backgroundColor: "whitesmoke",
+    fontSize:16
   },
 
   forgot_button: {
@@ -190,6 +205,19 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 10,
     textAlign: "center",
+  },
+  register: {
+    
+    textAlign: "center",
+    height:25,
+    width:80,
+    textAlign: "center",
+    backgroundColor:"orange"
+  
+  },
+  registers:{
+alignItems:"center",
+paddingLeft:10
   },
 
   loginBtn: {
@@ -209,4 +237,13 @@ const styles = StyleSheet.create({
   errorTxt: {
     color: "red",
   },
+  icon:{
+    fontSize:16
+  },
+  login:{
+    display:"flex",
+    flexDirection:"row",
+    paddingTop:20,
+    textAlign:"center"
+  }
 });
